@@ -1,8 +1,9 @@
+import java.math.BigDecimal;
 
-public class Movie {
+public abstract class Movie {
 
-	String title;
-	String priceCode;
+	private String title;
+	public String priceCode;
 
 	public Movie(String title, String priceCode) {
 		this.title = title;
@@ -13,7 +14,15 @@ public class Movie {
 		return title;
 	}
 
-	public String getPriceCode() {
-		return priceCode;
+	public abstract BigDecimal calculateFees(int days);
+
+	public BigDecimal extraDays(int days, int allowed) {
+		BigDecimal extraDays = new BigDecimal(days).subtract(new BigDecimal(allowed));
+		if (extraDays.compareTo(BigDecimal.ZERO) == -1) {
+			extraDays = BigDecimal.ZERO;
+		}
+		return extraDays;
 	}
+
 }
+
